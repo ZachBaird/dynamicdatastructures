@@ -100,6 +100,40 @@ class Tree
     end
   end
 
+  def inorder(node = @root, arr = [])
+    return arr if node.nil?
+
+    arr.push(node.value)
+    inorder(node.left_leaf, arr)
+    inorder(node.right_leaf, arr)
+  end
+
+  def preorder(node = @root, arr = [])
+    return arr if node.nil?
+
+    preorder(node.left_leaf, arr)
+    arr.push(node.value)
+    preorder(node.right_leaf, arr)
+  end
+
+  def postorder(node = @root, arr = [])
+    return arr if node.nil?
+
+    postorder(node.left_leaf, arr)
+    postorder(node.right_leaf, arr)
+    arr.push(node.value)
+  end
+
+  def height(value)
+    value = find(value) unless value.instance_of? Node
+    determine_tree_height(value)
+  end
+
+  def depth(value)
+    value = find(value) unless value.instance_of? Node
+    determine_depth(value)
+  end
+
   private
 
   def insert_traversal(node, value)
@@ -133,5 +167,25 @@ class Tree
   def one_leaf?(node)
     (node.left_leaf && node.right_leaf.nil?) ||
       (node.left_leaf.nil? && node.right_leaf)
+  end
+
+  def determine_depth(target_node, current_node = @root, count = 0)
+    return count if target_node == current_node
+
+    if target_node.value < current_node.value
+      determine_depth(target_node, current_node.left_leaf, count + 1)
+    else
+      determine_depth(target_node, current_node.right_leaf, count + 1)
+    end
+  end
+
+  def determine_tree_height(node)
+    # Return -1 for now
+    return -1 if node.nil?
+
+    left_result = determine_tree_height(node.left_leaf)
+    right_result = determine_tree_height(node.right_leaf)
+
+    1 + [left_result, right_result].max
   end
 end

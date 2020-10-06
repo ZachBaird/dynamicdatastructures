@@ -17,3 +17,14 @@ my_tree.pretty_print
 my_tree.delete(121)
 
 my_tree.pretty_print
+
+inorder_array = my_tree.inorder
+preorder_array = my_tree.preorder
+postorder_array = my_tree.postorder
+
+puts inorder_array
+puts "\n"
+puts preorder_array
+puts "\n"
+puts postorder_array
+puts "\n"
